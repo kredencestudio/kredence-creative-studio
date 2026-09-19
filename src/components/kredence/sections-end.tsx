@@ -239,9 +239,16 @@ export function Footer() {
           <p className="font-mono text-charcoal/55 text-[10px] tracking-[0.2em] uppercase">
             © {new Date().getFullYear()} Kredence Studio · All rights reserved
           </p>
-          <p className="font-mono text-charcoal/70 text-[10px] tracking-[0.2em] uppercase">
-            kredence.co@gmail.com · +91 8879513666
-          </p>
+          <div className="flex items-center gap-4 font-mono text-[10px] tracking-[0.2em] uppercase">
+            <span className="text-charcoal/70">kredence.co@gmail.com · +91 8879513666</span>
+            <span className="text-charcoal/30">|</span>
+            <a
+              href="/admin"
+              className="border border-teal/50 bg-teal/10 px-2.5 py-1 text-teal transition-colors hover:bg-teal hover:text-charcoal"
+            >
+              ⚙ Admin Manager
+            </a>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,18 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useSiteContent } from "@/lib/content-store";
 import { Reveal, SectionHeader, PlaceholderBlock, DoodleStar, DoodleArrow } from "./bits";
 
-const SITES = [
-  { name: "Aurelio Motors", url: "aureliomotors.com", tag: "Automotive" },
-  { name: "Maison Vera", url: "maisonvera.co", tag: "Luxury Retail" },
-  { name: "Terra Interiors", url: "terra-interiors.in", tag: "Furniture" },
-  { name: "Sable & Salt", url: "sableandsalt.com", tag: "Hospitality" },
-  { name: "Nocturne Parfums", url: "nocturne.parfums", tag: "Fragrance" },
-  { name: "Fieldnote Capital", url: "fieldnote.capital", tag: "Finance" },
-];
-
 export function Websites() {
+  const { content } = useSiteContent();
+  const sites = content.sites;
+
   return (
     <section id="work" className="bg-charcoal px-6 py-28">
       <div className="mx-auto max-w-7xl">
@@ -25,9 +20,14 @@ export function Websites() {
           note="Hover a frame to wake the site up."
         />
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {SITES.map((s, i) => (
-            <Reveal key={s.name} delay={i * 60} rotate={i % 2 ? 1.5 : -1.5}>
-              <article className="group bg-paper border-teal/60 relative border-2 p-3 transition-all duration-500 hover:-translate-y-2 hover:rotate-0 hover:shadow-lift">
+          {sites.map((s, i) => (
+            <Reveal key={s.id || s.name} delay={i * 60} rotate={i % 2 ? 1.5 : -1.5}>
+              <a
+                href={s.url.startsWith("http") ? s.url : `https://${s.url}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group bg-paper border-teal/60 relative border-2 p-3 transition-all duration-500 hover:-translate-y-2 hover:rotate-0 hover:shadow-lift block cursor-pointer"
+              >
                 <div className="border-charcoal/15 mb-2 flex items-center gap-2 border-b pb-2">
                   <span className="bg-teal size-2.5 rounded-full" />
                   <span className="bg-charcoal/25 size-2.5 rounded-full" />
@@ -40,7 +40,7 @@ export function Websites() {
                   <PlaceholderBlock label="Website Screenshot" tall />
                   <div className="bg-teal/90 absolute inset-0 flex translate-y-full items-center justify-center transition-transform duration-500 group-hover:translate-y-0">
                     <span className="font-mono text-charcoal inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase">
-                      View project <ArrowUpRight className="size-4" />
+                      Visit Website <ArrowUpRight className="size-4" />
                     </span>
                   </div>
                 </div>
@@ -50,7 +50,7 @@ export function Websites() {
                     {s.tag}
                   </span>
                 </div>
-              </article>
+              </a>
             </Reveal>
           ))}
         </div>
@@ -59,16 +59,10 @@ export function Websites() {
   );
 }
 
-const GRAPHICS = [
-  { title: "After Hours", type: "Campaign Key Visual", format: "4:5", layout: "portrait" },
-  { title: "Common Ground", type: "Editorial Spread", format: "A3", layout: "wide" },
-  { title: "Freshly Poured", type: "Social Campaign", format: "1:1", layout: "square" },
-  { title: "Nocturne No. 04", type: "Packaging System", format: "3:4", layout: "portrait" },
-  { title: "City in Motion", type: "Event Poster", format: "A2", layout: "tall" },
-  { title: "Field Notes", type: "Launch Toolkit", format: "16:9", layout: "wide" },
-];
-
 export function Graphics() {
+  const { content } = useSiteContent();
+  const graphics = content.graphics;
+
   return (
     <section id="graphics" className="paper-grain border-charcoal/15 overflow-hidden border-y px-6 py-28">
       <div className="mx-auto max-w-7xl">
@@ -79,49 +73,57 @@ export function Graphics() {
           ghost="GRAPHICS"
           note="Campaigns, posters, social systems and printed pieces — pinned to one working wall."
         />
-        <div className="grid auto-rows-[15rem] gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {GRAPHICS.map((graphic, i) => (
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {graphics.map((graphic, i) => (
             <Reveal
-              key={graphic.title}
+              key={graphic.id || graphic.title}
               delay={i * 60}
-              rotate={i % 3 === 0 ? -1.5 : i % 3 === 1 ? 1 : -0.5}
-              className={cn(
-                "min-h-0",
-                graphic.layout === "wide" && "lg:col-span-2",
-                graphic.layout === "tall" && "md:row-span-2",
-              )}
+              rotate={i % 3 === 0 ? -1 : i % 3 === 1 ? 1 : -0.5}
             >
-              <article className="group bg-card border-charcoal/20 relative flex h-full flex-col border p-3 shadow-paper transition-all duration-500 hover:-translate-y-2 hover:rotate-0 hover:border-teal hover:shadow-lift">
-                <div className="grid-lines bg-paper-dim relative min-h-0 flex-1 overflow-hidden border border-charcoal/15">
-                  <div className="absolute inset-4 border border-charcoal/20 transition-transform duration-500 group-hover:scale-[0.97]">
-                    <span className="bg-teal absolute left-0 top-0 h-2 w-2/3" />
-                    <span className="font-display text-charcoal/15 absolute bottom-1 left-2 text-6xl leading-none md:text-7xl">
-                      0{i + 1}
-                    </span>
-                    <span className="bg-charcoal absolute right-3 top-3 h-1/3 w-px" />
-                    <span className="bg-charcoal/10 absolute bottom-3 right-3 h-1/3 w-1/3" />
-                  </div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="bg-paper/90 font-mono text-charcoal border-charcoal/30 border px-3 py-2 text-center text-[10px] tracking-[0.2em] uppercase shadow-paper">
-                      {graphic.type}
+              <article className="group bg-card border-charcoal/20 relative flex flex-col border p-3 shadow-paper transition-all duration-500 hover:-translate-y-2 hover:rotate-0 hover:border-teal hover:shadow-lift">
+                <div className="border-charcoal/15 mb-2 flex items-center justify-between border-b pb-2">
+                  <div className="flex items-center gap-1.5">
+                    <span className="bg-teal size-2 rounded-full" />
+                    <span className="font-mono text-charcoal/60 text-[10px] tracking-wider uppercase">
+                      0{i + 1} / {graphic.type}
                     </span>
                   </div>
-                  <div className="bg-teal/90 absolute inset-0 flex translate-y-full items-center justify-center transition-transform duration-500 group-hover:translate-y-0">
-                    <span className="font-mono text-charcoal inline-flex items-center gap-2 text-xs tracking-[0.2em] uppercase">
-                      View piece <ArrowUpRight className="size-4" />
-                    </span>
-                  </div>
-                </div>
-                <div className="mt-3 flex items-end justify-between gap-4">
-                  <div>
-                    <p className="font-mono text-charcoal/50 text-[9px] tracking-[0.2em] uppercase">
-                      {graphic.type}
-                    </p>
-                    <h3 className="font-display text-charcoal mt-1 text-2xl">{graphic.title}</h3>
-                  </div>
-                  <span className="font-mono text-charcoal/55 shrink-0 text-[9px] tracking-[0.18em] uppercase">
+                  <span className="font-mono text-charcoal/50 text-[10px] tracking-wider">
                     {graphic.format}
                   </span>
+                </div>
+
+                <div className="bg-paper-dim relative h-[480px] w-full overflow-hidden border border-charcoal/15">
+                  <iframe
+                    src={graphic.embedUrl || (graphic.link.includes("instagram.com") ? `${graphic.link.split("?")[0]}embed/` : "")}
+                    className="h-full w-full border-0 bg-white"
+                    title={graphic.title}
+                    loading="lazy"
+                    allow="encrypted-media"
+                    scrolling="no"
+                  />
+                  <a
+                    href={graphic.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-charcoal/80 absolute inset-0 flex opacity-0 backdrop-blur-[2px] items-center justify-center transition-all duration-300 group-hover:opacity-100"
+                  >
+                    <span className="bg-teal text-charcoal font-mono inline-flex items-center gap-2 px-5 py-3 text-xs tracking-[0.2em] uppercase font-bold shadow-paper transition-transform duration-300 group-hover:scale-105">
+                      Open on Instagram <ArrowUpRight className="size-4" />
+                    </span>
+                  </a>
+                </div>
+
+                <div className="mt-3 flex items-center justify-between gap-2">
+                  <h3 className="font-display text-charcoal text-xl">{graphic.title}</h3>
+                  <a
+                    href={graphic.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-teal font-mono inline-flex items-center gap-1 text-[11px] uppercase tracking-wider hover:underline"
+                  >
+                    Instagram <ArrowUpRight className="size-3" />
+                  </a>
                 </div>
               </article>
             </Reveal>
@@ -132,45 +134,59 @@ export function Graphics() {
   );
 }
 
-const VIDEOS = [
-  "Brand Film — Automotive",
-  "Reel Series — Beauty",
-  "Launch Teaser — Fragrance",
-  "Docu Cut — Hospitality",
-  "Product Loop — Furniture",
-  "Event Recap — Fashion",
-  "Founder Story — Tech",
-  "Campaign TVC — Retail",
-];
-
 export function Videos() {
+  const { content } = useSiteContent();
+  const reels = content.reels;
+
   return (
-    <section className="paper-grain px-6 py-28">
+    <section id="videos" className="paper-grain px-6 py-28">
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           index="05"
           label="Videos edited"
           title="Cuts that hold"
           ghost="CUTS"
-          note="Scroll sideways. Hover to arm the player."
+          note="Scroll sideways to browse and play all reels."
         />
       </div>
-      <div className="scrollbar-none -mx-6 flex snap-x gap-6 overflow-x-auto px-6 pb-6">
-        {VIDEOS.map((v, i) => (
-          <Reveal key={v} delay={i * 50} rotate={i % 2 ? 1 : -1} className="shrink-0 snap-start">
-            <article className="group bg-card border-charcoal/20 w-[19rem] border p-3 shadow-paper transition-transform duration-400 hover:-translate-y-2">
-              <div className="relative overflow-hidden">
-                <PlaceholderBlock label="Video Thumbnail" tall />
-                <span className="bg-teal text-charcoal absolute inset-0 m-auto grid size-16 place-items-center rounded-full transition-all duration-400 group-hover:scale-125 group-hover:rotate-12">
-                  <Play className="size-6 fill-current" />
-                </span>
-                <span className="bg-charcoal text-paper font-mono absolute bottom-2 right-2 px-2 py-1 text-[10px] tracking-widest">
-                  0{i + 1}:2{i}
-                </span>
+      <div className="scrollbar-none -mx-6 flex snap-x gap-6 overflow-x-auto px-6 pb-6 pt-2">
+        {reels.map((reel, i) => (
+          <Reveal key={reel.id || reel.link} delay={i * 50} rotate={i % 2 ? 1 : -1} className="shrink-0 snap-start">
+            <article className="group bg-card border-charcoal/20 w-[21rem] sm:w-[23rem] flex flex-col border p-3 shadow-paper transition-all duration-400 hover:-translate-y-2 hover:border-teal hover:shadow-lift">
+              <div className="border-charcoal/15 mb-2 flex items-center justify-between border-b pb-2">
+                <div className="flex items-center gap-1.5">
+                  <span className="bg-teal size-2 rounded-full" />
+                  <span className="font-mono text-charcoal/60 text-[10px] tracking-wider uppercase">
+                    Reel 0{i + 1}
+                  </span>
+                </div>
+                <a
+                  href={reel.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-teal font-mono inline-flex items-center gap-1 text-[10px] uppercase tracking-wider hover:underline"
+                >
+                  Instagram <ArrowUpRight className="size-3" />
+                </a>
               </div>
-              <h3 className="font-mono text-charcoal mt-3 text-[11px] tracking-[0.2em] uppercase">
-                {v}
-              </h3>
+
+              <div className="bg-paper-dim relative h-[500px] w-full overflow-hidden border border-charcoal/15">
+                <iframe
+                  src={reel.embedUrl || (reel.link.includes("instagram.com") ? `${reel.link.split("?")[0]}embed/` : "")}
+                  className="h-[125%] w-[125%] origin-top-left scale-[0.8] border-0 bg-white"
+                  title={reel.title}
+                  loading="lazy"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  allowFullScreen
+                  scrolling="no"
+                />
+              </div>
+
+              <div className="mt-3 flex items-center justify-between">
+                <h3 className="font-mono text-charcoal text-[11px] tracking-[0.15em] uppercase truncate">
+                  {reel.title}
+                </h3>
+              </div>
             </article>
           </Reveal>
         ))}
@@ -184,30 +200,29 @@ const LOGOS = [
   { name: "Vertex", shape: "" },
   { name: "Lume", shape: "rounded-full" },
   { name: "Kite", shape: "" },
-  { name: "Anvil", shape: "rounded-full" },
-  { name: "Petal", shape: "" },
-  { name: "Nomad", shape: "rounded-full" },
-  { name: "Quarry", shape: "" },
+  { name: "Anvil", shape: "" },
+  { name: "Petal", shape: "rounded-full" },
+  { name: "Nomad", shape: "" },
+  { name: "Quarry", shape: "rounded-full" },
 ];
 
 export function Logos() {
   return (
-    <section className="bg-paper-dim border-charcoal/15 relative border-y px-6 py-28">
-      <DoodleStar className="text-teal absolute top-16 right-12 size-16 rotate-12" />
+    <section className="bg-paper border-charcoal/15 border-y px-6 py-28">
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           index="06"
-          label="Logos designed"
+          label="Logos & marks"
           title="Marks on paper"
           ghost="MARKS"
           note="Each one pinned up, slightly crooked. Hover to bring it into focus."
         />
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
           {LOGOS.map((l, i) => (
-            <Reveal key={l.name} delay={i * 50} rotate={i % 3 === 0 ? -3 : i % 3 === 1 ? 2 : -1}>
+            <Reveal key={l.name} delay={i * 45} rotate={i % 2 ? 1.5 : -1.5}>
               <div
                 className={cn(
-                  "bg-card border-charcoal/20 group grid aspect-square place-items-center border p-6 shadow-paper transition-all duration-400 hover:rotate-0 hover:scale-[1.04] hover:shadow-lift",
+                  "group tape bg-card border-charcoal/20 grid aspect-square place-items-center border p-4 shadow-paper transition-all duration-400 hover:-translate-y-2 hover:rotate-0 hover:shadow-lift",
                   l.shape,
                 )}
               >
@@ -262,26 +277,15 @@ export function Brands() {
   );
 }
 
-const INDUSTRIES = [
-  "Automotive",
-  "Luxury & Retail",
-  "Beauty",
-  "Real Estate",
-  "Furniture & Interiors",
-  "Food & Hospitality",
-  "Fragrance & Lifestyle",
-  "Media",
-  "Personal Brands",
-  "Fashion",
-  "Technology",
-  "Hospitality",
-  "Wellness",
-  "Education",
-];
-
 export function Industries() {
+  const { content } = useSiteContent();
+  const industries = content.industries;
   const wrapRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  const topRowCount = Math.floor(industries.length / 2);
+  const topRow = industries.slice(0, topRowCount);
+  const bottomRow = industries.slice(topRowCount);
 
   useEffect(() => {
     const el = wrapRef.current;
@@ -308,35 +312,70 @@ export function Industries() {
           invert
           note="Move your cursor — the cloud leans with you."
         />
-        <div ref={wrapRef} className="flex flex-wrap justify-center gap-4 py-6">
-          {INDUSTRIES.map((tag, i) => (
-            <Reveal key={tag} delay={i * 40} rotate={0}>
-              <span
-                className={cn(
-                  "wiggle-hover font-mono inline-block cursor-default px-5 py-3 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:scale-110",
-                  i % 2
-                    ? "bg-teal text-charcoal"
-                    : "text-paper border-teal/70 border-2 hover:bg-teal hover:text-charcoal",
-                )}
-                style={{
-                  transform: `translate3d(${tilt.x * ((i % 4) + 1) * 0.35}px, ${tilt.y * ((i % 3) + 1) * 0.35}px, 0) rotate(${i % 2 ? 1.5 : -1.5}deg)`,
-                }}
-              >
-                {tag}
-              </span>
-            </Reveal>
-          ))}
-        </div>
-        <div className="border-teal/25 mt-14 overflow-hidden border-y py-4">
-          <div className="marquee-track flex w-max gap-10">
-            {[...INDUSTRIES, ...INDUSTRIES].map((t, i) => (
-              <span key={`${t}-${i}`} className="font-display text-paper/25 text-4xl whitespace-nowrap">
-                {t} <span className="text-teal">✳</span>
-              </span>
+        <div ref={wrapRef} className="flex flex-col items-center gap-4 py-6">
+          {/* Top Row */}
+          <div className="flex flex-wrap justify-center gap-4">
+            {topRow.map((tag, i) => (
+              <Reveal key={tag} delay={i * 40} rotate={0}>
+                <span
+                  className={cn(
+                    "wiggle-hover font-mono inline-block cursor-default px-5 py-3 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:scale-110",
+                    i % 2
+                      ? "bg-teal text-charcoal"
+                      : "text-paper border-teal/70 border-2 hover:bg-teal hover:text-charcoal",
+                  )}
+                  style={{
+                    transform: `translate3d(${tilt.x * ((i % 4) + 1) * 0.35}px, ${tilt.y * ((i % 3) + 1) * 0.35}px, 0) rotate(${i % 2 ? 1.5 : -1.5}deg)`,
+                  }}
+                >
+                  {tag}
+                </span>
+              </Reveal>
             ))}
+          </div>
+
+          {/* Bottom Row (has more than top row) */}
+          <div className="flex flex-wrap justify-center gap-4">
+            {bottomRow.map((tag, idx) => {
+              const i = idx + topRowCount;
+              return (
+                <Reveal key={tag} delay={i * 40} rotate={0}>
+                  <span
+                    className={cn(
+                      "wiggle-hover font-mono inline-block cursor-default px-5 py-3 text-[11px] tracking-[0.2em] uppercase transition-all duration-300 hover:scale-110",
+                      i % 2
+                        ? "bg-teal text-charcoal"
+                        : "text-paper border-teal/70 border-2 hover:bg-teal hover:text-charcoal",
+                    )}
+                    style={{
+                      transform: `translate3d(${tilt.x * ((i % 4) + 1) * 0.35}px, ${tilt.y * ((i % 3) + 1) * 0.35}px, 0) rotate(${i % 2 ? 1.5 : -1.5}deg)`,
+                    }}
+                  >
+                    {tag}
+                  </span>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+export function IndustryMarquee() {
+  const { content } = useSiteContent();
+  const industries = content.industries;
+
+  return (
+    <div className="bg-charcoal border-teal/25 overflow-hidden border-y py-4">
+      <div className="marquee-track flex w-max gap-10">
+        {[...industries, ...industries].map((t, i) => (
+          <span key={`${t}-${i}`} className="font-display text-paper/25 text-3xl sm:text-4xl whitespace-nowrap">
+            {t} <span className="text-teal">✳</span>
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
