@@ -66,14 +66,17 @@ export function Hero() {
         </Reveal>
 
         <Reveal delay={60} rotate={0}>
-          <h1 className="font-display text-charcoal text-[3.4rem] leading-[0.86] sm:text-8xl lg:text-[10rem]">
-            <span data-ghost="WE BUILD" className="ghost-text block">
-              WE BUILD
-            </span>
-            <span className="marker-underline">BRANDS</span> THAT
+          <h1 className="font-display text-charcoal text-[2.75rem] leading-[0.88] sm:text-7xl lg:text-[7rem]">
+            MARKETING
             <br />
-            <span data-ghost="MISBEHAVE" className="ghost-text block">
-              MISBEHAVE
+            WITHOUT{" "}
+            <span className="bg-teal text-charcoal px-4 py-1 -rotate-2 inline-block shadow-sticker font-display tracking-tight">
+              HUMOR
+            </span>
+            <br />
+            <span className="mt-6 block font-body text-xl font-medium tracking-tight text-charcoal/90 sm:text-3xl lg:text-4xl">
+              is like <span className="marker-underline text-charcoal">rajma without chawal</span>{" "}
+              <span className="font-mono text-teal font-bold">(ugh)</span>
             </span>
           </h1>
         </Reveal>
@@ -102,9 +105,9 @@ export function Hero() {
         </Reveal>
 
         {/* floating collage elements */}
-        <div className="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden>
+        <div className="pointer-events-none absolute -inset-x-12 inset-y-0 hidden lg:block" aria-hidden>
           <div
-            className="floaty absolute top-6 left-0 w-44 rotate-[-8deg]"
+            className="floaty absolute -top-4 -left-12 lg:-left-20 w-36 lg:w-40 rotate-[-8deg] z-0"
             style={{ ["--r" as string]: "-8deg", transform: `translate3d(${p.x}px, ${p.y}px, 0)` }}
           >
             <div className="tape bg-card border-charcoal/20 border p-2 shadow-paper">
@@ -115,7 +118,7 @@ export function Hero() {
             </div>
           </div>
           <div
-            className="floaty absolute right-4 bottom-10 w-40 rotate-[7deg]"
+            className="floaty absolute -bottom-4 -right-10 lg:-right-16 w-36 lg:w-40 rotate-[7deg] z-0"
             style={{ ["--r" as string]: "7deg", transform: `translate3d(${-p.x}px, ${-p.y}px, 0)` }}
           >
             <div className="bg-card border-charcoal/20 border p-2 shadow-paper">
@@ -125,10 +128,10 @@ export function Hero() {
               </p>
             </div>
           </div>
-          <DoodleStar className="text-teal absolute top-24 right-24 size-14 rotate-12" />
-          <DoodleSpiral className="text-charcoal/40 absolute bottom-24 left-24 size-16" />
-          <DoodleArrow className="text-charcoal/50 absolute top-1/2 left-8 size-24 -rotate-12" />
-          <DoodleSquiggle className="text-teal absolute right-1/4 bottom-4 w-32" />
+          <DoodleStar className="text-teal absolute top-20 right-16 size-12 rotate-12" />
+          <DoodleSpiral className="text-charcoal/40 absolute bottom-16 -left-8 size-14" />
+          <DoodleArrow className="text-charcoal/50 absolute top-1/3 -left-14 size-20 -rotate-12" />
+          <DoodleSquiggle className="text-teal absolute right-1/4 bottom-2 w-28" />
         </div>
       </div>
     </section>
@@ -155,7 +158,7 @@ export function About() {
                 the_desk.jpg
               </p>
               <span className="bg-teal font-mono text-charcoal absolute -right-5 -bottom-6 rotate-[-6deg] px-3 py-2 text-[10px] tracking-widest uppercase shadow-sticker">
-                since 2019
+                2026
               </span>
             </div>
           </Reveal>
@@ -169,17 +172,16 @@ export function About() {
             </Reveal>
             <Reveal delay={90} rotate={-1}>
               <p className="text-muted-foreground max-w-2xl leading-relaxed">
-                Strategy sets the direction, identity gives it a face, content keeps it talking and
-                media puts it in front of the right people. We move between those rooms daily —
-                writing decks in the morning, colour-grading in the afternoon, arguing about kerning
-                at night. The result is work that holds together across every surface it lands on.
+                You bring the idea, product, or growth challenge. Kredence connects high-level business
+                strategy, in-house podcast and video production, custom digital development, and search
+                marketing into one deliberate, continuous workflow.
               </p>
             </Reveal>
             <div className="flex flex-wrap gap-4">
               {[
-                { k: "120+", v: "projects shipped" },
-                { k: "40+", v: "brands partnered" },
-                { k: "6", v: "disciplines in-house" },
+                { k: "150+", v: "crazy ideas" },
+                { k: "60+", v: "revolutions" },
+                { k: "3", v: "people doing just what they feel like" },
               ].map((s, i) => (
                 <Reveal key={s.k} delay={120 + i * 80} rotate={i % 2 ? 2 : -2}>
                   <div className="sticker px-5 py-4">

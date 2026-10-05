@@ -196,14 +196,11 @@ export function Videos() {
 }
 
 const LOGOS = [
-  { name: "Orbit", shape: "rounded-full" },
-  { name: "Vertex", shape: "" },
-  { name: "Lume", shape: "rounded-full" },
-  { name: "Kite", shape: "" },
-  { name: "Anvil", shape: "" },
-  { name: "Petal", shape: "rounded-full" },
-  { name: "Nomad", shape: "" },
-  { name: "Quarry", shape: "rounded-full" },
+  { name: "Cinephile In Frame", image: "/images/logos/cinephile.png" },
+  { name: "N1 True Media", image: "/images/logos/n1truemedia.png" },
+  { name: "Neeleshwer Developers", image: "/images/logos/neeleshwer.png" },
+  { name: "Modinea", image: "/images/logos/modinea.png" },
+  { name: "Rituraj Gupta", image: "/images/logos/riturajgupta.png" },
 ];
 
 export function Logos() {
@@ -217,20 +214,27 @@ export function Logos() {
           ghost="MARKS"
           note="Each one pinned up, slightly crooked. Hover to bring it into focus."
         />
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
           {LOGOS.map((l, i) => (
             <Reveal key={l.name} delay={i * 45} rotate={i % 2 ? 1.5 : -1.5}>
               <div
-                className={cn(
-                  "group tape bg-card border-charcoal/20 grid aspect-square place-items-center border p-4 shadow-paper transition-all duration-400 hover:-translate-y-2 hover:rotate-0 hover:shadow-lift",
-                  l.shape,
-                )}
+                className="group tape bg-card border-charcoal/20 grid aspect-square place-items-center border p-4 shadow-paper transition-all duration-400 hover:-translate-y-2 hover:rotate-0 hover:shadow-lift"
               >
-                <div className="text-center">
-                  <div className="border-charcoal/30 group-hover:border-teal group-hover:bg-teal/15 mx-auto grid size-16 place-items-center border-2 transition-all duration-400">
-                    <span className="font-display text-charcoal text-2xl">{l.name[0]}</span>
+                <div className="flex h-full w-full flex-col items-center justify-between py-2 text-center">
+                  <div className="flex flex-1 items-center justify-center p-2">
+                    {l.image ? (
+                      <img
+                        src={l.image}
+                        alt={l.name}
+                        className="max-h-24 max-w-full object-contain mix-blend-multiply transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="border-charcoal/30 group-hover:border-teal group-hover:bg-teal/15 mx-auto grid size-16 place-items-center border-2 transition-all duration-400">
+                        <span className="font-display text-charcoal text-2xl">{l.name[0]}</span>
+                      </div>
+                    )}
                   </div>
-                  <p className="font-mono text-charcoal/60 group-hover:text-charcoal mt-3 text-[10px] tracking-[0.24em] uppercase transition-colors">
+                  <p className="font-mono text-charcoal/70 group-hover:text-charcoal mt-2 text-[10px] tracking-[0.2em] uppercase font-semibold transition-colors">
                     {l.name}
                   </p>
                 </div>
@@ -243,8 +247,30 @@ export function Logos() {
   );
 }
 
-const BRANDS = ["Halcyon", "Verdant", "Mono&Co", "Saffron", "Northbay", "Ellis", "Pilot", "Dune", "Studio 9"];
-const OFFSETS = ["-6deg", "3deg", "-2deg", "4deg", "-4deg", "2deg", "-3deg", "5deg", "-1deg"];
+const BRANDS = [
+  "Porsche",
+  "The Bicester Collection",
+  "Radhika Ramuka Jewellery",
+  "Get FiBAR",
+  "Modinea",
+  "Second Brick",
+  "Shubh Sagar Virar",
+  "N1 True Media",
+  "Rituraj Gupta",
+  "Crylic Claws",
+  "Arabic Scent House",
+  "Cinephile In Frame",
+  "Neeleshwer Developers",
+  "Poonam Sharma",
+  "The Blossom Story",
+  "Pro-Dev",
+  "World of Badge",
+];
+const OFFSETS = [
+  "-4deg", "3deg", "-2deg", "4deg", "-3deg", "2deg",
+  "-4deg", "3deg", "-2deg", "4deg", "-3deg", "2deg",
+  "-3deg", "4deg", "-2deg", "3deg", "-4deg"
+];
 
 export function Brands() {
   return (
